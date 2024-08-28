@@ -18,6 +18,11 @@ public class FareCalculatorService {
         //Conversion en heure et utilisation des double
         double duration = (double) (outHour - inHour) /(60000*60);
 
+        //US1 : Free parking for 30min
+        if (duration <= 0.5){
+            duration = 0;
+        }
+
         switch (ticket.getParkingSpot().getParkingType()){
             case CAR: {
                 ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
