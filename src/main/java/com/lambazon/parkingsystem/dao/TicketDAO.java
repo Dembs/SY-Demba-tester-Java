@@ -108,4 +108,23 @@ public class TicketDAO {
         return count;
     }
 
+    public boolean updateInTime(Ticket ticket) {
+        Connection con = null;
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET_TIME);
+            ps.setTimestamp(1, new Timestamp(ticket.getInTime().getTime()));
+            ps.setInt(2, ticket.getId());
+            ps.execute();
+            dataBaseConfig.closePreparedStatement(ps);
+            return true;
+        } catch (Exception ex) {
+            logger.error("Erreur lors de la mise à jour de l'heure d'entrée du ticket", ex);
+            return false;
+        } finally {
+            dataBaseConfig.closeConnection(con);
+        }
+    }
+
+
 }
