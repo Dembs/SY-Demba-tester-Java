@@ -107,7 +107,7 @@ public class ParkingDataBaseIT {
         // Simuler une durée d'une heure sur le ticket
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
         Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000)); // 1 heure avant
+        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
         ticket.setInTime(inTime);
         ticketDAO.updateInTime(ticket);
 
@@ -118,5 +118,4 @@ public class ParkingDataBaseIT {
         // Vérifier que le prix calculé correspond au prix avec réduction d'une heure de stationnement
         assertEquals(ticket.getPrice(), Fare.CAR_RATE_PER_HOUR *1*0.95,0.01);
     }
-
 }

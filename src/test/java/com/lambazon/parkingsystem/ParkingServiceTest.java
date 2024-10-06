@@ -64,7 +64,6 @@ public class ParkingServiceTest {
         verify(ticketDAO,Mockito.times(1)).getNbTicket(anyString());
         verify(ticketDAO, Mockito.times(1)).updateTicket(any(Ticket.class));
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
-
     }
 
     @Test
@@ -78,12 +77,12 @@ public class ParkingServiceTest {
             ticket.setVehicleRegNumber("ABCDEF");
 
             when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
+            //Update renvoie false
             when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(false);
             when(ticketDAO.getNbTicket(anyString())).thenReturn(1);
 
             parkingService.processExitingVehicle();
 
-            // Vérifications
             verify(ticketDAO, times(1)).getTicket(anyString());
             verify(ticketDAO, times(1)).getNbTicket(anyString());
             verify(ticketDAO, times(1)).updateTicket(any(Ticket.class));
@@ -108,7 +107,7 @@ public class ParkingServiceTest {
 
     @Test
     public void testGetNextParkingNumberIfAvailable() {
-            when(inputReaderUtil.readSelection()).thenReturn(1); // 1 pour CAR
+            when(inputReaderUtil.readSelection()).thenReturn(1);
             when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(1);
 
             ParkingSpot parkingSpot = parkingService.getNextParkingNumberIfAvailable();
@@ -121,7 +120,7 @@ public class ParkingServiceTest {
 
     @Test
     public void testGetNextParkingNumberIfAvailableParkingNumberNotFound() {
-            when(inputReaderUtil.readSelection()).thenReturn(1); // 1 pour CAR
+            when(inputReaderUtil.readSelection()).thenReturn(1);
             when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(0);
 
             ParkingSpot parkingSpot = parkingService.getNextParkingNumberIfAvailable();
